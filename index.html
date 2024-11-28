@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cenário 3D com A-Frame</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Luz ambiente -->
+      <a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
+      <!-- Luz direcional -->
+      <a-light type="directional" position="-1 2 1" intensity="0.7"></a-light>
+
+      <!-- Chão -->
+      <a-plane
+        position="0 0 0"
+        rotation="-90 0 0"
+        width="20"
+        height="20"
+        color="#7CFC00"
+      ></a-plane>
+
+      <!-- Boneco (Controlado pelo teclado) -->
+      <a-entity
+        id="player"
+        geometry="primitive: box; height: 1.5; width: 1; depth: 1"
+        material="color: #FF5733"
+        position="0 0.75 -5"
+        movement-controls
+      ></a-entity>
+
+      <!-- Árvore 1 -->
+      <a-entity>
+        <a-cylinder
+          position="-3 1 -3"
+          radius="0.3"
+          height="2"
+          color="#8B4513"
+        ></a-cylinder>
+        <a-sphere position="-3 2.5 -3" radius="1" color="#228B22"></a-sphere>
+      </a-entity>
+
+      <!-- Árvore 2 -->
+      <a-entity>
+        <a-cylinder
+          position="4 1 -6"
+          radius="0.3"
+          height="2"
+          color="#8B4513"
+        ></a-cylinder>
+        <a-sphere position="4 2.5 -6" radius="1" color="#228B22"></a-sphere>
+      </a-entity>
+
+      <!-- Plataforma de Pedra -->
+      <a-box
+        position="0 0.5 0"
+        depth="2"
+        height="0.5"
+        width="2"
+        color="#696969"
+      ></a-box>
+
+      <!-- Alavanca -->
+      <a-box
+        id="lever"
+        position="3 1 2"
+        rotation="0 45 0"
+        depth="0.2"
+        height="1"
+        width="0.2"
+        color="#C0C0C0"
+      ></a-box>
+
+      <!-- Porta Mágica -->
+      <a-box
+        id="door"
+        position="0 1.5 5"
+        width="2"
+        height="3"
+        depth="0.1"
+        color="#0000FF"
+      ></a-box>
+
+      <!-- Script de Movimento -->
+      <script>
+        AFRAME.registerComponent('movement-controls', {
+          init: function () {
+            let el = this.el;
+            window.addEventListener('keydown', function (e) {
+              let position = el.getAttribute('position');
+              switch (e.key) {
+                case 'ArrowUp':
+                  position.z -= 0.1;
+                  break;
+                case 'ArrowDown':
+                  position.z += 0.1;
+                  break;
+                case 'ArrowLeft':
+                  position.x -= 0.1;
+                  break;
+                case 'ArrowRight':
+                  position.x += 0.1;
+                  break;
+              }
+              el.setAttribute('position', position);
+            });
+          },
+        });
+      </script>
+    </a-scene>
+  </body>
+</html>
+
